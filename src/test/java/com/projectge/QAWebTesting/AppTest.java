@@ -10,12 +10,30 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+/**
+ * 
+ * Test case for testing the website thedemosite.co.uk.
+ * Will check if an account is made and an be logged into.
+ * 
+ * @author Administrator
+ *
+ */
 public class AppTest {
 	
+	/**
+	 * Variable definitions
+	 * As a tester, you can change the username and password here.
+	 * Leave the domain as http://thedemosite.co.uk/
+	 */
 	private static WebDriver wd; 
 	
+	private static String username = "tmpuser";
+	private static String password = "tmppass";
+	
+	private static String domain = "http://thedemosite.co.uk/";
+	
 	/**
-	 * Initialises the test case with a chrome driver.
+	 * Initialises the test case with a Chrome driver.
 	 */
 	@BeforeClass
 	public static void beforeClassTest() {
@@ -28,7 +46,7 @@ public class AppTest {
 	@Test
 	public void appTest() {
 		wd.manage().window().maximize();
-		wd.navigate().to("http://thedemosite.co.uk/");
+		wd.navigate().to(domain);
 		
 		createAccount();
 		loginAccount();
@@ -77,12 +95,12 @@ public class AppTest {
 		// Get the username box
 		WebElement usernameInput = wd.findElement(By.xpath("//input[@name='username']"));
 		usernameInput.click();
-		usernameInput.sendKeys("tmpuser12");
+		usernameInput.sendKeys(username);
 
 		// Get the password box
 		WebElement passwordInput = wd.findElement(By.xpath("//input[@name='password']"));
 		passwordInput.click();
-		passwordInput.sendKeys("tmppass");
+		passwordInput.sendKeys(password);
 
 		// Submit 
 		WebElement submitInput = wd.findElement(By.xpath("//input[@name='FormsButton2']"));
@@ -101,12 +119,12 @@ public class AppTest {
 		// Get the username box
 		WebElement usernameInput = wd.findElement(By.xpath("//input[@name='username']"));
 		usernameInput.click();
-		usernameInput.sendKeys("tmpuser12");
+		usernameInput.sendKeys(username);
 
 		// Get the password box
 		WebElement passwordInput = wd.findElement(By.xpath("//input[@name='password']"));
 		passwordInput.click();
-		passwordInput.sendKeys("tmppass");
+		passwordInput.sendKeys(password);
 		
 		// Get the submit button
 		WebElement submitInput = wd.findElement(By.xpath("//input[@name='FormsButton2']"));
