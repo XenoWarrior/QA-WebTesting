@@ -28,7 +28,6 @@ public class AppTest {
 	@Test
 	public void appTest() {
 		wd.manage().window().maximize();
-		
 		wd.navigate().to("http://thedemosite.co.uk/");
 		
 		createAccount();
@@ -36,9 +35,9 @@ public class AppTest {
 
 		// Status label
 		WebElement status = wd.findElement(By.xpath("//blockquote/blockquote/font/center/b"));
+		System.out.println(status.getText());
 		
 		// Check test results
-		System.out.println(status.getText());
 		assertEquals("The login should be successful.", "**Successful Login**", status.getText());
 	}
 	
