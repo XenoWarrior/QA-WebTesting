@@ -1,10 +1,12 @@
 package utils;
 
+import lombok.Data;
+
+@Data
 public class DataStore {
 
-	public static String userName = "tmpuser";
-	public static String userPass = "tmppass";
-	
-	public static String webDomain = "http://thedemosite.co.uk/";
-	
+	private String userName = "foo1";
+	private String userPass = "bar1";
+	private String webDomain = "http://thedemosite.co.uk/";
+
 }

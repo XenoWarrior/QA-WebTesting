@@ -23,5 +23,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/.m2/repository/net/java/dev/jna/jna-platform/4.1.0/jna-platform-4.1.0.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="net.java.dev.jna"/>
+			<attribute name="maven.artifactId" value="jna-platform"/>
+			<attribute name="maven.version" value="4.1.0"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
