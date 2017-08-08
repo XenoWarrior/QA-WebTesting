@@ -49,8 +49,10 @@ public class AppTest {
 		wd.navigate().to(domain);
 		
 		createAccount();
+		sleep(2000);
 		loginAccount();
 
+		sleep(2000);
 		// Status label
 		WebElement status = wd.findElement(By.xpath("//blockquote/blockquote/font/center/b"));
 		System.out.println(status.getText());
