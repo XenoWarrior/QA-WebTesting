@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -15,15 +18,15 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import pages.LoginStatus;
 import pages.NavigationBar;
 import pages.UserForm;
 import utils.DataStore;
+import utils.SpreadSheetReader;
 import utils.TestUtilities;
+
+import java.util.List;
 
 /**
  * 
@@ -43,11 +46,14 @@ public class AppTest {
 	private static NavigationBar navigationBar;
 	private static UserForm userForm;
 	private static LoginStatus loginStatus;
-	private static DataStore ds = new DataStore();
 
     private static ExtentReports report;
+    
+    private static List<String> accountDetails; 
     private static ExtentTest accountCreateTest;
     private static ExtentTest accountLoginTest;
+    private static ExtentTest excelFileReaderTest;
+    
     private static String reportFilePath = "C:\\Users\\Administrator\\Desktop\\Report.html";
 
 	/**
@@ -60,8 +66,9 @@ public class AppTest {
 
 	@Before
 	public void reportSetup() {
+
         report = new ExtentReports();
-        
+		
         ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(reportFilePath);
         extentHtmlReporter.config().setReportName("The Demo Site");
         extentHtmlReporter.config().setDocumentTitle("DocumentTitle");
@@ -69,6 +76,30 @@ public class AppTest {
 
         accountCreateTest = report.createTest("Account Creation Test");
         accountLoginTest = report.createTest("Account Login Test");
+        excelFileReaderTest = report.createTest("Excel File Reader Test");
+
+		SpreadSheetReader sheetReader;
+		try {
+			sheetReader = new SpreadSheetReader("TestData.xlsx");
+			excelFileReaderTest.debug("Reading Excel file: TestData.xlsx");
+			this.accountDetails = sheetReader.readRow(1, "Input");
+			excelFileReaderTest.debug("Reading sheet: Input");
+
+			DataStore.userName = this.accountDetails.get(2);
+			DataStore.userPass = this.accountDetails.get(3);
+			
+			if(DataStore.userName != "" && DataStore.userPass != "") {
+				excelFileReaderTest.pass("No errors occured");
+			}
+			else {
+				excelFileReaderTest.warning("Username or password could not be read fromthe excel data sheet, using default values");
+			}
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -141,9 +172,13 @@ public class AppTest {
 		loginStatus = PageFactory.initElements(webDriver, LoginStatus.class);
 		assertEquals("The login should be successful.", "**Successful Login**", loginStatus.getMessage());
 
-        report.flush();
 	}
 
+	@After
+	public void flushReport() {
+        report.flush();
+	}
+	
 	/**
 	 * Cleanup the Chrome process.
 	 */
